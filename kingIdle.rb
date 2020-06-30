@@ -61,14 +61,17 @@ list_of_url_to_wake = [
 		'idle'=> drum_url.get_idle_state
 	},
 ]
-for remote in list_of_url_to_wake
-	n = 0
-	while(remote['idle'] != true && n < 3)
+
+def beginPings(list_of_urls)
+	for remote in list_of_urls
 		p1 = Net::Ping::HTTP.new(remote['url'])
 		if (p1.ping?) 
 		    puts "Pinging: " + remote['url']
 		end
-		n += 1
 	end
-	sleep(15.minutes)
+end
+
+while(true)
+	beginPings(list_of_urls_to_wake)
+	sleep(35.minutes)
 end
